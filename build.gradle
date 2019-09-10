@@ -14,7 +14,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.assertj', name: 'assertj-core', version: '3.3.0'
     testCompile group: 'info.cukes', name: 'cucumber-java8', version: '1.2.5'
-    testCompile group: 'info.cukes', name: 'cucumber-picocontainer', version: '1.2.4'
+    testCompile group: 'info.cukes', name: 'cucumber-picocontainer', version: '1.2.5'
 }
 
 configurations {
