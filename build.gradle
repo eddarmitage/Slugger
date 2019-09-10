@@ -11,16 +11,22 @@ repositories {
 project.buildDir = 'target'
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.13.2'
-    testCompile group: 'info.cukes', name: 'cucumber-java8', version: '1.2.5'
-    testCompile group: 'info.cukes', name: 'cucumber-picocontainer', version: '1.2.5'
+    testImplementation platform('org.junit:junit-bom:5.5.1')
+    testImplementation('org.junit.jupiter:junit-jupiter')
+
+    testCompile('org.assertj:assertj-core:3.13.2')
+    testCompile('info.cukes:cucumber-java8:1.2.5')
+    testCompile('info.cukes:cucumber-picocontainer:1.2.5')
 }
 
 configurations {
     cucumberRuntime {
         extendsFrom testRuntime
     }
+}
+
+test {
+    useJUnitPlatform()
 }
 
 task cucumber(type: Test, dependsOn: "test") {

@@ -1,23 +1,17 @@
 package com.eddarmitage.slugger;
 
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.OptionalInt;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SlugBuilderTest {
-
-    @Before
-    public void setup() {
-
-    }
+class SlugBuilderTest {
 
     @Test
-    public void testSlugBuilder_withDefaultConfiguration() {
+    void testSlugBuilder_withDefaultConfiguration() {
         SlugBuilder slugBuilder = new SlugBuilder("-");
         Arrays.asList("one", "two", "three").forEach(slugBuilder::addWord);
 
@@ -25,7 +19,7 @@ public class SlugBuilderTest {
     }
 
     @Test
-    public void testSlugBuilder_withLengthRestriction() {
+    void testSlugBuilder_withLengthRestriction() {
         SlugBuilder slugBuilder = new SlugBuilder(OptionalInt.of(10), false, "-");
         Arrays.asList("one", "two", "three").forEach(slugBuilder::addWord);
 
@@ -33,7 +27,7 @@ public class SlugBuilderTest {
     }
 
     @Test
-    public void testSlugBuilder_withLengthRestrictionAndLongSeparator() {
+    void testSlugBuilder_withLengthRestrictionAndLongSeparator() {
         SlugBuilder slugBuilder = new SlugBuilder(OptionalInt.of(10), false, "-----");
         Arrays.asList("one", "two", "three").forEach(slugBuilder::addWord);
 
@@ -41,7 +35,7 @@ public class SlugBuilderTest {
     }
 
     @Test
-    public void testSlugBuilder_withLongFirstWord() {
+    void testSlugBuilder_withLongFirstWord() {
         SlugBuilder slugBuilder = new SlugBuilder(OptionalInt.of(10), false, "-");
         slugBuilder.addWord("refrigerator");
 
@@ -49,7 +43,7 @@ public class SlugBuilderTest {
     }
 
     @Test
-    public void testSlugBuilder_withLongFirstWordAndHardLimitsEnforced() {
+    void testSlugBuilder_withLongFirstWordAndHardLimitsEnforced() {
         SlugBuilder slugBuilder = new SlugBuilder(OptionalInt.of(10), true, "-");
         slugBuilder.addWord("refrigerator");
 
@@ -57,7 +51,7 @@ public class SlugBuilderTest {
     }
 
     @Test
-    public void testSlugBuilder_isMergedWithOtherSlugBuilder() {
+    void testSlugBuilder_isMergedWithOtherSlugBuilder() {
         SlugBuilder firstBuilder = new SlugBuilder("-");
         Arrays.asList("one", "two").forEach(firstBuilder::addWord);
 
