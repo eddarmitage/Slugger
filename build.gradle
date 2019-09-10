@@ -10,32 +10,40 @@ repositories {
 
 project.buildDir = 'target'
 
+sourceSets {
+    bdd {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.5.1')
     testImplementation('org.junit.jupiter:junit-jupiter')
 
-    testCompile('org.assertj:assertj-core:3.13.2')
-    testCompile('info.cukes:cucumber-java8:1.2.5')
-    testCompile('info.cukes:cucumber-picocontainer:1.2.5')
+    testImplementation('org.assertj:assertj-core:3.13.2')
+    bddImplementation('io.cucumber:cucumber-java:4.7.1')
+    bddImplementation('io.cucumber:cucumber-picocontainer:4.7.1')
 }
 
 configurations {
-    cucumberRuntime {
-        extendsFrom testRuntime
-    }
+    bddImplementation.extendsFrom testImplementation
+    bddRuntimeOnly.extendsFrom runtimeOnly
+
+    cucumberRuntime.extendsFrom bddImplementation
 }
 
 test {
     useJUnitPlatform()
 }
 
-task cucumber(type: Test, dependsOn: "test") {
-    dependsOn assemble, compileTestJava
+task cucumber() {
+    dependsOn assemble, compileBddJava
     doLast {
         javaexec {
             main = "cucumber.api.cli.Main"
-            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-            args = ['--plugin', 'pretty', '--plugin', 'html:target/cucumber', '--glue', 'com.eddarmitage.slugger.bdd', 'src/test/resources']
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.bdd.output
+            args = ['--plugin', 'pretty', '--plugin', 'html:target/cucumber', '--glue', 'com.eddarmitage.slugger.bdd', 'src/bdd/resources']
         }
     }
 }
