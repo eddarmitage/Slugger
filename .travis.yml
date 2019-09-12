@@ -1,3 +1,35 @@
 language: java
 jdk:
   - openjdk8
+  - openjdk9
+  - openjdk10
+  - openjdk11
+  - openjdk12
+
+jobs:
+  include:
+    - stage: test
+      name: "Unit Tests"
+      script: ./gradlew test
+    - stage: test
+      name: "Cucumber Tests"
+      script: ./gradlew integrationTest
+    - stage: release
+      name: "Maven Release"
+      if: branch = master
+      jdk: openjdk11
+      script: skip
+      deploy:
+        provider: script
+        script: ./gradlew final
+    - stage: publish
+      name: "GitHub Release"
+      if: (tag =~ ^v) AND (branch = master)
+      jdk: openjdk11
+      script: assemble
+      deploy:
+        provider: releases
+        api_key: $GITHUB_OAUTH_TOKEN
+        skip_cleanup: true
+        file_glob: true
+        file: build/libs/*
