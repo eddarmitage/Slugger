@@ -4,4 +4,13 @@
   ],
 
   "gradle": { "enabled": true }
+  
+  "packageRules": [
+    {
+      "groupName": "cucumber",
+      "packagePatterns": [
+        "^io.cucumber:"
+      ]
+    }
+  ]
 }
