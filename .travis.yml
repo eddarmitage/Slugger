@@ -5,26 +5,33 @@ jdk:
   - openjdk10
   - openjdk11
   - openjdk12
+  - openjdk13
+
+stages:
+  - name: test
+  - name: release
+    if: branch =~ /^(master|hotfix-.*)$/
+  - name: publish
+    if: (tag =~ ^release) AND (branch =~ /^(master|hotfix-.*)$/)
+
 
 jobs:
   include:
-    - stage: test
-      name: "Unit Tests"
+    - name: "Unit Tests"
+      stage: test
       script: ./gradlew test
-    - stage: test
-      name: "Cucumber Tests"
-      script: ./gradlew integrationTest
-    - stage: release
-      name: "Maven Release"
-      if: branch = master
+    - name: "Cucumber Tests"
+      stage: test
+      script: ./gradlew cucumber
+    - name: "Tag Release"
+      stage: release
       jdk: openjdk11
       script: skip
       deploy:
         provider: script
         script: ./gradlew final
-    - stage: publish
-      name: "GitHub Release"
-      if: (tag =~ ^v) AND (branch = master)
+    - name: "GitHub Release"
+      stage: publish
       jdk: openjdk11
       script: assemble
       deploy:

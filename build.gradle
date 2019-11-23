@@ -1,69 +1,60 @@
 plugins {
     id 'java'
     id 'jacoco'
-    id "nebula.contacts" version "5.0.3"
-    id "nebula.javadoc-jar" version "13.4.1"
-    id "nebula.nebula-bintray-publishing" version "7.4.1"
-    id "nebula.source-jar" version "13.1.0"
-    id 'nebula.info' version '5.0.3'
-    id 'nebula.integtest' version '6.0.3'
-    id 'nebula.maven-publish' version '13.4.1'
-    id 'nebula.release' version '11.1.2'
     id 'com.github.kt3k.coveralls' version '2.8.4'
+    id 'pl.allegro.tech.build.axion-release' version '1.10.2'
 }
 
-group = 'com.eddarmitage'
-description = 'A Java library for creating nice URL Slugs'
+scmVersion {
+    ignoreUncommittedChanges = false
+}
+
+project.group = 'com.eddarmitage'
+project.description = 'A Java library for creating nice URL Slugs'
+project.version = scmVersion.version
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-
-contacts {
-    'edward.armitage@gmail.com' {
-        moniker 'Edd Armitage'
-        github 'eddarmitage'
-    }
-}
 
 repositories {
     mavenCentral()
 }
 
-project.buildDir = 'target'
-
 sourceSets {
-    bdd {
+    cucumber {
         compileClasspath += sourceSets.main.output
         runtimeClasspath += sourceSets.main.output
     }
+}
+
+configurations {
+    cucumberImplementation.extendsFrom testImplementation
+    cucumberRuntime.extendsFrom testRuntime, testImplementation
 }
 
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.5.2')
     testImplementation('org.junit.jupiter:junit-jupiter')
     testImplementation('org.assertj:assertj-core:3.14.0')
-    bddImplementation('io.cucumber:cucumber-java:4.8.0')
-    bddImplementation('io.cucumber:cucumber-picocontainer:4.8.0')
-}
-
-configurations {
-    bddImplementation.extendsFrom testImplementation
-    bddRuntimeOnly.extendsFrom runtimeOnly
-
-    cucumberRuntime.extendsFrom bddImplementation
+    cucumberImplementation('io.cucumber:cucumber-java:4.8.0')
+    cucumberRuntime('io.cucumber:cucumber-java:4.8.0')
+    cucumberRuntime('io.cucumber:cucumber-picocontainer:4.8.0')
 }
 
 test {
     useJUnitPlatform()
 }
 
-task cucumber() {
-    dependsOn assemble, compileBddJava
+task cucumber(type: Test) {
+    testClassesDirs = sourceSets.cucumber.output.classesDirs
+    classpath = sourceSets.cucumber.runtimeClasspath
+
+    dependsOn classes
     doLast {
         javaexec {
             main = "cucumber.api.cli.Main"
-            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.bdd.output
-            args = ['--plugin', 'pretty', '--plugin', 'html:target/cucumber', '--glue', 'com.eddarmitage.slugger.bdd', 'src/bdd/resources']
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.cucumber.output
+            args = ['--plugin', 'pretty', '--plugin', 'html:build/cucumber', '--glue', 'com.eddarmitage.slugger.bdd', 'src/cucumber/resources']
         }
     }
 }
