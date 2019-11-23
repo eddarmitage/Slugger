@@ -2,30 +2,39 @@ language: java
 install: true
 
 jdk:
+- openjdk11
 - openjdk8
 - openjdk9
 - openjdk10
-- openjdk11
 - openjdk12
 - openjdk13
 
-script: "./gradlew test"
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
 
 stages:
 - name: test
 - name: release
-  if: branch =~ /^(master|hotfix-.*)$/
+  if: branch =~ /^master$/
+
+script: "./gradlew test"
+
 jobs:
   include:
   - name: Cucumber Tests
     stage: test
-    jdk: openjdk11
     script: "./gradlew cucumber"
   - name: Release
     stage: release
-    jdk: openjdk11
     script: "./gradlew release"
     after_success: "./gradlew build"
+
 deploy:
   provider: releases
   api_key:
