@@ -52,6 +52,9 @@ test {
 }
 
 task cucumber(type: Test) {
+    jacoco {
+        enabled = false
+    }
     testClassesDirs = sourceSets.cucumber.output.classesDirs
     classpath = sourceSets.cucumber.runtimeClasspath
 

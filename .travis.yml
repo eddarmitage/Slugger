@@ -1,42 +1,37 @@
 language: java
+install: true
+
 jdk:
-  - openjdk8
-  - openjdk9
-  - openjdk10
-  - openjdk11
-  - openjdk12
-  - openjdk13
+- openjdk8
+- openjdk9
+- openjdk10
+- openjdk11
+- openjdk12
+- openjdk13
+
+script: "./gradlew test"
 
 stages:
-  - name: test
-  - name: release
-    if: branch =~ /^(master|hotfix-.*)$/
-  - name: publish
-    if: (tag =~ ^release) AND (branch =~ /^(master|hotfix-.*)$/)
-
-
+- name: test
+- name: release
+  if: branch =~ /^(master|hotfix-.*)$/
 jobs:
   include:
-    - name: "Unit Tests"
-      stage: test
-      script: ./gradlew test
-    - name: "Cucumber Tests"
-      stage: test
-      script: ./gradlew cucumber
-    - name: "Tag Release"
-      stage: release
-      jdk: openjdk11
-      script: skip
-      deploy:
-        provider: script
-        script: ./gradlew final
-    - name: "GitHub Release"
-      stage: publish
-      jdk: openjdk11
-      script: assemble
-      deploy:
-        provider: releases
-        api_key: $GITHUB_OAUTH_TOKEN
-        skip_cleanup: true
-        file_glob: true
-        file: build/libs/*
+  - name: Cucumber Tests
+    stage: test
+    jdk: openjdk11
+    script: "./gradlew cucumber"
+  - name: Release
+    stage: release
+    jdk: openjdk11
+    script: "./gradlew release"
+    after_success: "./gradlew build"
+deploy:
+  provider: releases
+  api_key:
+    secure: jujx9G096RI3CZ7EzZSZI5vsYVdlZMd+CXqD4hEzSBHxfyrarzKaF6NRa0Gj20om6Zi4D5X23upB8t6nafuYdaRfll2d0aV6ymO2zMK7YWKDbAj3vvUPyaVy8NlIsDRTITrTp1aa4rwfG6QCqNnQGt8vUCJaoTXa+r5fZ2iqP00VqJEjvRJ02a3cfvvJaEZlNS9RtsCLNcpTBZNYEKfeoAe8lLpuLUvy/JuQXW3UfDkBFhKI4+X1G9pcoB9Hu/ZGMph5jwQMo3LlnDxIkdv8eDh7UfqGjulzMqpDnzVpxGnegpqS3uL/MU1DtTfHXyziMSZ00AnFwI/cmYr6LSMTmZOlUN2tjzt/73coDwyW+WBl8NUH+c9SwRZVKtJEwwlh+RAgb6yVNpZMPZyLNsgKNGT5VZNnoxmcLijlNVwmCXFFX+FYIOdI9b/aIOS7iFP2YixwNmP841vQTOhjnHpuEsYizfA3OFYdqGQ6V9vjbEwi/vpSnVSMDHSgpP//mbeFc9VlOtRBLqWPU40LlWYJ/a6ExxaXQp1jRp0zqQCBrWHIXlEDtkPCPTeM/DWKlBBQ5NGOfCS5yIvqCvAMbuzR9qw5cjeuqMeiEiz1xJmPRXLFQFRnoYqlbudTYoEHRVfCV4GgipY3jrJTf7Ge3mFBXS6v79JdMA9X6DZIPAyknso=
+  file_glob: true
+  file: build/libs/*
+  on:
+    tags: true
+    repo: eddarmitage/Slugger
