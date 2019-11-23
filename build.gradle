@@ -1,5 +1,5 @@
 plugins {
-    id 'java'
+    id 'java-library'
     id 'jacoco'
     id 'com.github.kt3k.coveralls' version '2.8.4'
     id 'pl.allegro.tech.build.axion-release' version '1.10.2'
@@ -29,7 +29,7 @@ sourceSets {
 
 configurations {
     cucumberImplementation.extendsFrom testImplementation
-    cucumberRuntime.extendsFrom testRuntime, testImplementation
+    cucumberRuntimeOnly.extendsFrom testRuntimeOnly
 }
 
 dependencies {
@@ -37,8 +37,8 @@ dependencies {
     testImplementation('org.junit.jupiter:junit-jupiter')
     testImplementation('org.assertj:assertj-core:3.14.0')
     cucumberImplementation('io.cucumber:cucumber-java:4.8.0')
-    cucumberRuntime('io.cucumber:cucumber-java:4.8.0')
-    cucumberRuntime('io.cucumber:cucumber-picocontainer:4.8.0')
+    cucumberRuntimeOnly('io.cucumber:cucumber-junit:4.8.0')
+    cucumberRuntimeOnly('io.cucumber:cucumber-picocontainer:4.8.0')
 }
 
 test {
@@ -52,8 +52,8 @@ task cucumber(type: Test) {
     dependsOn classes
     doLast {
         javaexec {
-            main = "cucumber.api.cli.Main"
-            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.cucumber.output
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntimeClasspath + sourceSets.main.output + sourceSets.cucumber.output
             args = ['--plugin', 'pretty', '--plugin', 'html:build/cucumber', '--glue', 'com.eddarmitage.slugger.bdd', 'src/cucumber/resources']
         }
     }
