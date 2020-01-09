@@ -21,8 +21,8 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:5.5.2')
     testImplementation('org.junit.jupiter:junit-jupiter')
     testImplementation('org.assertj:assertj-core:3.14.0')
-    bddImplementation('io.cucumber:cucumber-java:4.8.0')
-    bddImplementation('io.cucumber:cucumber-picocontainer:4.8.0')
+    bddImplementation('io.cucumber:cucumber-java:4.8.1')
+    bddImplementation('io.cucumber:cucumber-picocontainer:4.8.1')
 }
 
 configurations {
