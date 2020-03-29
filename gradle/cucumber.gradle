@@ -7,7 +7,7 @@ sourceSets {
 }
 
 configurations {
-    cucumberRuntime.extendsFrom cucumberImplementation
+    cucumberClasspath.extendsFrom cucumberImplementation
 }
 
 task cucumber(type: Test) {
@@ -16,7 +16,7 @@ task cucumber(type: Test) {
     doFirst {
         javaexec {
             main = "io.cucumber.core.cli.Main"
-            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.cucumber.output
+            classpath = configurations.cucumberClasspath + sourceSets.main.output + sourceSets.cucumber.output
             args = ['--plugin', 'pretty', '--plugin', 'junit:build/test-results/cucumber/cucumber-report.xml', '--plugin', 'html:build/reports/tests/cucumber', '--glue', 'com.eddarmitage.slugger.cucumber', '--strict', 'src/cucumber/resources']
         }
     }
