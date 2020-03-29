@@ -1,6 +1,6 @@
-package com.eddarmitage.slugger.bdd.steps;
+package com.eddarmitage.slugger.cucumber.steps;
 
-import com.eddarmitage.slugger.bdd.SluggerHelper;
+import com.eddarmitage.slugger.cucumber.SluggerHelper;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 

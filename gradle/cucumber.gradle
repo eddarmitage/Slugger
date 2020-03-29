@@ -1,0 +1,31 @@
+
+sourceSets {
+    cucumber {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+
+configurations {
+    cucumberRuntime.extendsFrom cucumberImplementation
+}
+
+task cucumber(type: Test) {
+    dependsOn assemble, compileCucumberJava
+
+    doFirst {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.cucumber.output
+            args = ['--plugin', 'pretty', '--plugin', 'junit:build/test-results/cucumber/cucumber-report.xml', '--plugin', 'html:build/reports/tests/cucumber', '--glue', 'com.eddarmitage.slugger.cucumber', '--strict', 'src/cucumber/resources']
+        }
+    }
+}
+
+task cucumberReport(type: TestReport) {
+    destinationDir = file("$buildDir/reports/cucumber")
+    // Include the results from the `test` task in all subprojects
+    reportOn subprojects*.cucumber
+}
+
+check.dependsOn cucumber
