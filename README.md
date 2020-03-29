@@ -1,6 +1,6 @@
 # Slugger - A Java library for creating nice URL Slugs
 
-[![Build Status](https://travis-ci.org/eddarmitage/Slugger.svg?branch=master)](https://travis-ci.org/eddarmitage/Slugger)
+![Build Status](https://github.com/eddarmitage/slugger/workflows/Java%20CI/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/eddarmitage/Slugger/badge.svg?branch=master)](https://coveralls.io/github/eddarmitage/Slugger?branch=master)
 [![License](https://img.shields.io/github/license/eddarmitage/Slugger.svg)](LICENSE)
 
