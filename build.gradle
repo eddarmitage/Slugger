@@ -4,50 +4,25 @@ plugins {
     id 'com.github.kt3k.coveralls' version '2.10.1'
 }
 
+apply from: 'gradle/cucumber.gradle'
+apply from: file('gradle/test-reports.gradle')
+
 repositories {
     mavenCentral()
-}
-
-project.buildDir = 'target'
-
-sourceSets {
-    bdd {
-        compileClasspath += sourceSets.main.output
-        runtimeClasspath += sourceSets.main.output
-    }
 }
 
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.6.1')
     testImplementation('org.junit.jupiter:junit-jupiter')
     testImplementation('org.assertj:assertj-core:3.15.0')
-    bddImplementation('io.cucumber:cucumber-java:5.5.0')
-    bddImplementation('io.cucumber:cucumber-picocontainer:5.5.0')
-}
-
-configurations {
-    bddImplementation.extendsFrom testImplementation
-    bddRuntimeOnly.extendsFrom runtimeOnly
-
-    cucumberRuntime.extendsFrom bddImplementation
+    cucumberImplementation('io.cucumber:cucumber-java:5.5.0')
+    cucumberImplementation('io.cucumber:cucumber-picocontainer:5.5.0')
+    cucumberImplementation('org.assertj:assertj-core:3.15.0')
 }
 
 test {
     useJUnitPlatform()
 }
-
-task cucumber() {
-    dependsOn assemble, compileBddJava
-    doLast {
-        javaexec {
-            main = "cucumber.api.cli.Main"
-            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.bdd.output
-            args = ['--plugin', 'pretty', '--plugin', 'html:target/cucumber', '--glue', 'com.eddarmitage.slugger.bdd', 'src/bdd/resources']
-        }
-    }
-}
-
-check.dependsOn cucumber
 
 jacocoTestReport {
     reports {
@@ -57,5 +32,5 @@ jacocoTestReport {
 }
 
 coveralls {
-    jacocoReportPath 'target/reports/jacoco/test/jacocoTestReport.xml'
+    jacocoReportPath 'build/reports/jacoco/test/jacocoTestReport.xml'
 }

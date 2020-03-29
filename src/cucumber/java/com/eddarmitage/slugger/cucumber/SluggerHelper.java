@@ -1,4 +1,4 @@
-package com.eddarmitage.slugger.bdd;
+package com.eddarmitage.slugger.cucumber;
 
 import com.eddarmitage.slugger.Slugger;
 
