@@ -2,9 +2,19 @@
   "extends": [
     "config:base"
   ],
-
-  "gradle": { "enabled": true },
-  
+  "automerge": false,
+  "automergeType": "pr",
+  "semanticCommits": true,
+  "pinDigests": true,
+  "pin": {
+    "automerge": true
+  },
+  "patch": {
+    "automerge": true
+  },
+  "gradle": {
+    "enabled": true
+  },
   "packageRules": [
     {
       "groupName": "cucumber",
