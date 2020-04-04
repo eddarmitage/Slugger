@@ -12,3 +12,4 @@ jobs:
       - uses: brpaz/action-semantic-release@v1
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_URL: github.com/eddarmitage/Slugger.git
