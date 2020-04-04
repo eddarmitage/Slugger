@@ -1,0 +1,5 @@
+tagFormat: ${version}
+verifyConditions:
+  - "@semantic-release/github"
+publish:
+  - "@semantic-release/github"
