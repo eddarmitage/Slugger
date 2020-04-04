@@ -15,10 +15,11 @@ would require escaping in a URL are removed or replaced, as appropriate.
 ## Getting Started
 The simplest usage of `Slugger` would be something like the following:
 
-    Slugger slugger = Slugger.create();
-    String firstTitle = slugger.sluggify("My first blog post"); // my-first-blog-post
-    String secondTitle = slugger.sluggify("Another post!"); // another-post
-
+```java
+Slugger slugger = Slugger.create();
+String firstTitle = slugger.sluggify("My first blog post"); // my-first-blog-post
+String secondTitle = slugger.sluggify("Another post!"); // another-post
+```
 This creates an instance of a `Slugger` with the default configuration, which
 splits the input on whitespace, removes special characters, and converts the
 output to lowercase.
@@ -31,14 +32,17 @@ whitespace, although a number of alternative word splitters are provided (and
 To replace the default splitter, use the `withWordSplitter(WordSplitter ws)`
 method as follows:
 
-    Slugger slugger = Slugger.create().withWordSplitter(WordSplitters.camelCaseWordSplitter());
-    slugger.sluggify("MyFirstBlogPost"); // my-first-blog-post
+```java
+Slugger slugger = Slugger.create().withWordSplitter(WordSplitters.camelCaseWordSplitter());
+slugger.sluggify("MyFirstBlogPost"); // my-first-blog-post
+```
 
 Splitters can also be _chained_, so you can split on both whitespace and
 camel-case, as follows:
 
-    Slugger slugger = Slugger.create().withAdditionalWordSplitter(WordSplitters.camelCaseWordSplitter());
-    slugger.sluggify("The importance of toString()"); //the-importance-of-to-string
-
+```java
+Slugger slugger = Slugger.create().withAdditionalWordSplitter(WordSplitters.camelCaseWordSplitter());
+slugger.sluggify("The importance of toString()"); //the-importance-of-to-string
+```
 
 [word-splitter]: src/main/java/com/eddarmitage/slugger/WordSplitter.java
