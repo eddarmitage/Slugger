@@ -1,5 +1,5 @@
 plugins {
-    id 'java'
+    id 'java-library'
     id 'jacoco'
     id 'com.github.kt3k.coveralls' version '2.10.1'
     id 'com.palantir.git-version' version '0.12.3'
@@ -29,6 +29,9 @@ allprojects {
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
+
+    withSourcesJar()
+    withJavadocJar()
 }
 
 test {
