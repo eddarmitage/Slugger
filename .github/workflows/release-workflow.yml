@@ -23,6 +23,7 @@ jobs:
       - name: Perform release
         uses: cycjimmy/semantic-release-action@v2
         with:
+          semantic_release: 17.0.4
           extra_plugins: |
             @semantic-release/changelog
             @semantic-release/exec
