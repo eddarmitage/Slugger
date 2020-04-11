@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'jacoco'
     id 'com.github.kt3k.coveralls' version '2.10.1'
-    id 'io.wusa.semver-git-plugin' version '2.0.2'
+    id 'com.palantir.git-version' version '0.12.3'
 }
 
 apply from: 'gradle/cucumber.gradle'
@@ -23,7 +23,7 @@ dependencies {
 
 allprojects {
     archivesBaseName = 'slugger'
-    version = semver.info
+    version = gitVersion()
 }
 
 java {
