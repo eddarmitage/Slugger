@@ -9,7 +9,9 @@ jobs:
     name: Release Slugger
     runs-on: ubuntu-latest
     steps:
-      - uses: brpaz/action-semantic-release@v1
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Perform release
+        uses: cycjimmy/semantic-release-action@v2
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          GITHUB_URL: github.com/eddarmitage/Slugger.git
+          GITHUB_TOKEN: ${{secrets.PERSONAL_ACCESS_TOKEN}}
