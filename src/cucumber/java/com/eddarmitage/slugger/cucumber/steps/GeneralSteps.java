@@ -71,6 +71,11 @@ public class GeneralSteps {
         sluggerHelper.applyInput(input);
     }
 
+    @Then("the output will be {string}")
+    public void checkOutput(String output) {
+        assertThat(sluggerHelper.getOutput()).isEqualTo(output);
+    }
+
     @Then("the output will not contain any {character} characters")
     public void checkOutputDoesNotContainCharacter(Character character) {
         assertThat(sluggerHelper.getOutput()).doesNotContain(character.toString());

@@ -45,7 +45,7 @@ class CharacterReplacer {
     }
 
     private String replaceNonSlugCharacters(String word) {
-        return Normalizer.normalize(word, Form.NFC)
+        return Normalizer.normalize(word, Form.NFKD)
                 .replaceAll(NOT_SLUG_CHARS_REGEX, "");
     }
 
