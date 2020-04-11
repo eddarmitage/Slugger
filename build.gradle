@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'jacoco'
     id 'com.github.kt3k.coveralls' version '2.10.1'
+    id 'io.wusa.semver-git-plugin' version '2.0.2'
 }
 
 apply from: 'gradle/cucumber.gradle'
@@ -20,6 +21,11 @@ dependencies {
     cucumberImplementation('org.assertj:assertj-core:3.15.0')
 }
 
+allprojects {
+    archivesBaseName = 'slugger'
+    version = semver.info
+}
+
 test {
     useJUnitPlatform()
 }
@@ -33,4 +39,14 @@ jacocoTestReport {
 
 coveralls {
     jacocoReportPath 'build/reports/jacoco/test/jacocoTestReport.xml'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Implementation-Vendor': 'Edd Armitage',
+                'Implementation-Title': 'Slugger',
+                'Implementation-Version':  rootProject.version
+        )
+    }
 }
