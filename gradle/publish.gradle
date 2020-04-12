@@ -1,0 +1,13 @@
+task publish {
+    dependsOn 'assemble'
+    dependsOn 'copyJavadoc'
+}
+
+task copyJavadoc(type: Copy) {
+    dependsOn 'javadoc'
+    from "$buildDir/docs/javadoc"
+    into "docs/javadoc"
+    onlyIf {
+        System.env['GITHUB_ACTIONS'] != null
+    }
+}
