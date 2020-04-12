@@ -12,5 +12,9 @@ plugins:
     - publishCmd: './gradlew clean assemble'
   - - @semantic-release/github
     - assets:
-        - path: build/libs/*.jar
-          label: Slugger Jars
+        - path: "build/libs/slugger-${nextRelease.version}.jar"
+          label: Slugger Jar
+        - path: "build/libs/slugger-${nextRelease.version}-javadoc.jar"
+          label: Slugger Javadoc Jar
+        - path: "build/libs/slugger-${nextRelease.version}-sources.jar"
+          label: Slugger Sources Jar
