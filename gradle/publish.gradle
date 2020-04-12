@@ -1,7 +1,3 @@
-task publish {
-    dependsOn 'assemble'
-    dependsOn 'copyJavadoc'
-}
 
 task copyJavadoc(type: Copy) {
     dependsOn 'javadoc'
@@ -9,5 +5,41 @@ task copyJavadoc(type: Copy) {
     into "docs/javadoc"
     onlyIf {
         System.env['GITHUB_ACTIONS'] != null
+    }
+}
+
+publish.dependsOn(copyJavadoc)
+
+publishing {
+    publications {
+        slugger(MavenPublication) {
+            artifactId = getName().toLowerCase()
+
+            pom {
+                name = 'Slugger'
+                description = 'A Java library for creating nice URL Slugs'
+                url = 'https://github.com/eddarmitage/Slugger/'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        name = 'Edd Armitage'
+                        email = 'edward.armitage@gmail.com'
+                        url = 'https://eddarmitage.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/eddarmitage/Slugger.git'
+                    developerConnection = 'scm:git:ssh://github.com:eddarmitage/Slugger.git'
+                    url = 'http://github.com/eddarmitage/Slugger/tree/master'
+                }
+            }
+
+            from components.java
+        }
     }
 }
