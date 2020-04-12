@@ -9,6 +9,7 @@ plugins:
     - message: "release: 🚀 ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       assets: [docs/CHANGELOG.md, docs/javadoc]
   - - @semantic-release/exec
+    - verifyReleaseCmd: './gradlew clean check'
     - publishCmd: './gradlew clean publish'
   - - @semantic-release/github
     - assets:
