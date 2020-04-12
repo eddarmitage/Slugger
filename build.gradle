@@ -4,6 +4,7 @@ plugins {
     id 'com.github.kt3k.coveralls' version '2.10.1'
     id 'com.palantir.git-version' version '0.12.3'
     id 'maven-publish'
+    id 'com.jfrog.bintray' version '1.8.5'
 }
 
 apply from: file('gradle/cucumber.gradle')

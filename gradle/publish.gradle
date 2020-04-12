@@ -12,8 +12,8 @@ publish.dependsOn(copyJavadoc)
 
 publishing {
     publications {
-        slugger(MavenPublication) {
-            artifactId = getName().toLowerCase()
+        SluggerMavenPublication(MavenPublication) {
+            artifactId = rootProject.name.toLowerCase()
 
             pom {
                 name = 'Slugger'
@@ -40,6 +40,29 @@ publishing {
             }
 
             from components.java
+        }
+    }
+}
+
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    publications = ['SluggerMavenPublication']
+
+    pkg {
+        repo = 'Maven'
+        name = 'slugger'
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/eddarmitage/Slugger.git'
+
+        version {
+            name = gitVersion()
+            released = new Date()
+
+            gpg {
+                sign = true
+                passphrase = System.getenv('GPG_PASSPHRASE')
+            }
         }
     }
 }

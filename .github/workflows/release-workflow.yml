@@ -30,6 +30,9 @@ jobs:
             @semantic-release/git
         env:
           GITHUB_TOKEN: ${{secrets.PERSONAL_ACCESS_TOKEN}}
+          BINTRAY_USER: ${{secrets.BINTRAY_USER}}
+          BINTRAY_KEY: ${{secrets.BINTRAY_KEY}}
+          GPG_PASSPHRASE: ${{secrets.GPG_PASSPHRASE}}
       - name: Re-enable branch protection
         uses: benjefferies/branch-protection-bot@1.0.2
         if: always()  # Force to always run this step to ensure "include administrators" is turned back on
