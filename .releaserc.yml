@@ -8,9 +8,9 @@ plugins:
   - - @semantic-release/git
     - message: "release: 🚀 ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       assets: [docs/CHANGELOG.md]
+  - - @semantic-release/exec
+    - publishCmd: './gradlew clean assemble'
   - - @semantic-release/github
     - assets:
         - path: build/libs/*.jar
           label: Slugger Jars
-  - - @semantic-release/exec
-    - prepareCmd: './gradlew clean assemble'
