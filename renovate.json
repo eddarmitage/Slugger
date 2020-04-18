@@ -1,17 +1,12 @@
 {
   "extends": [
-    "config:base"
+    "config:base",
+    ":automergeMinor",
+    ":automergePr",
+    ":automergeRequireAllStatusChecks",
+    ":semanticCommits",
+    "docker:pinDigests"
   ],
-  "automerge": false,
-  "automergeType": "pr",
-  "semanticCommits": true,
-  "pinDigests": true,
-  "pin": {
-    "automerge": true
-  },
-  "patch": {
-    "automerge": true
-  },
   "gradle": {
     "enabled": true
   },
