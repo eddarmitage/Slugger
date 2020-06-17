@@ -17,7 +17,7 @@ task cucumber(type: Test) {
         javaexec {
             main = "io.cucumber.core.cli.Main"
             classpath = configurations.cucumberClasspath + sourceSets.main.output + sourceSets.cucumber.output
-            args = ['--plugin', 'pretty', '--plugin', 'junit:build/test-results/cucumber/cucumber-report.xml', '--plugin', 'html:build/reports/tests/cucumber', '--glue', 'com.eddarmitage.slugger.cucumber', '--strict', 'src/cucumber/resources']
+            args = ['--plugin', 'pretty', '--plugin', 'junit:build/test-results/cucumber/cucumber-report.xml', '--plugin', 'html:build/reports/tests/cucumber.html', '--glue', 'com.eddarmitage.slugger.cucumber', 'src/cucumber/resources']
         }
     }
 }
