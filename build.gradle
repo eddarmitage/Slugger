@@ -18,7 +18,7 @@ repositories {
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.6.2')
     testImplementation('org.junit.jupiter:junit-jupiter')
-    testImplementation('org.assertj:assertj-core:3.16.1')
+    testImplementation('org.assertj:assertj-core:3.17.0')
     cucumberImplementation('io.cucumber:cucumber-java:6.5.1')
     cucumberImplementation('io.cucumber:cucumber-picocontainer:6.5.1')
     cucumberImplementation('org.assertj:assertj-core:3.15.0')
