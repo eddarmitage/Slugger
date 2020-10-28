@@ -17,7 +17,7 @@ jobs:
         with:
           java-version: 1.8
       - name: Temporarily disable branch protection
-        uses: benjefferies/branch-protection-bot@1.0.2
+        uses: benjefferies/branch-protection-bot@v1.0.5
         with:
           access-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       - name: Perform release
@@ -34,7 +34,7 @@ jobs:
           BINTRAY_KEY: ${{secrets.BINTRAY_KEY}}
           GPG_PASSPHRASE: ${{secrets.GPG_PASSPHRASE}}
       - name: Re-enable branch protection
-        uses: benjefferies/branch-protection-bot@1.0.2
+        uses: benjefferies/branch-protection-bot@v1.0.5
         if: always()  # Force to always run this step to ensure "include administrators" is turned back on
         with:
           access-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
