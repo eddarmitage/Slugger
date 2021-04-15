@@ -1,23 +1,22 @@
-name: Java CI
+name: Test
 
-on:
-  pull_request:
-    branches: [ master ]
+on: [push, pull_request]
 
 jobs:
-  check:
-    name: Check - Java ${{ matrix.java }}
+
+  test:
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        java: [1.8, 11, 14]
+      fail-fast: false
+      matrix: 
+        run: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
     steps:
+
       - uses: actions/checkout@v2
-      - name: Setup JDK ${{ matrix.java }}
-        uses: actions/setup-java@v1
-        with:
-          java-version: ${{ matrix.java }}
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-      - name: Run checks with Gradle
-        run: ./gradlew check
+
+
+      - name: chmod
+        run: chmod +x yyy
+
+      - name: run
+        run: ./yyy
